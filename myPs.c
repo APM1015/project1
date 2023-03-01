@@ -12,7 +12,7 @@
 int pid(const char *string);
 int cpuState();
 int systemTime(const char *string);
-int state(const char *string, int *pid);
+int state(const char *string, int pid);
 int commandLine(const char *string);
 int tokenizeStat(const char *argv);
 int uTime(const char *argv);
@@ -21,7 +21,7 @@ int virtMemory(const char *argv);
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
-    state(*argv, *pid);
+    state(*argv, pid);
     uTime(*argv);
     systemTime(*argv);
     virtMemory(*argv);
@@ -39,6 +39,7 @@ for(int i = 0; i < argc; i++) {
     if (strcmp(argv[i], "-p") == 0) {
         pid(argv[i]);
     }
+
     else if(strcmp(argv[i], "-s") == 0){
         state(argv[i]);
     }
@@ -54,6 +55,7 @@ for(int i = 0; i < argc; i++) {
     else if(strcmp(argv[i], "-c") == 0){
         commandLine(argv[i]);
     }
+
 }
  */
 /*
@@ -79,6 +81,7 @@ while ((argc = getopt(argc, argv, "-p:-s:-U:-S:-v:-c")) != -1) {
            commandLine(argv);
            break;
        default:
+
            break;
    }
 }
@@ -99,28 +102,30 @@ int pid(const char *argv) {
 }
 
 //-s
-int state(const char *argv, int *pid){
+int state(const char *argv, int pid){
     //int *p = pid;
     //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
-    char proc[] = "proc/";
-    char stat[] = "/stat";
-    strcat(proc, pid);
-    strcat(proc, stat);
-    
+   // char proc[] = "proc/";
+    //char stat[] = "/stat";
+    //strcat(proc, pid);
+    //strcat(proc, stat);
+    char fileName[256];
+    sprintf(fileName, "proc/%d/stat", pid);
+
     //sprintf
     char *token;
     char *str[400];
     int i = 0;
 
 
-    FILE *f = fopen(proc,"r");
+    FILE *f = fopen(fileName,"r");
     if(f == NULL){
         printf("Unable to open file");
         return 1;
     }
-    fgets(str, 400, f);
+    //fgets(str, 400, f);
 
-    fclose(f);
+    //fclose(f);
 
     // Get first token
     token = strtok(str, " ");
@@ -139,6 +144,7 @@ int state(const char *argv, int *pid){
 
         token = strtok(NULL, " ");
     }
+    fclose(f);
     return 0;
 }
 //-S
