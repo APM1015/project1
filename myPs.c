@@ -109,18 +109,21 @@ int state(const char *argv, int pid){
     //char stat[] = "/stat";
     //strcat(proc, pid);
     //strcat(proc, stat);
-    char fileName[256];
+    char fileName[1024];
+    //sprintf(fileName, "proc/%d/stat", pid);
     sprintf(fileName, "proc/%d/stat", pid);
+    printf("%s ",fileName);
 
     //sprintf
     char *token;
     char *str[400];
     int i = 0;
+   // char buf[1024];
 
 
     FILE *f = fopen(fileName,"r");
     if(f == NULL){
-        printf("Unable to open file");
+        printf("Unable to open file\n");
         return 1;
     }
     //fgets(str, 400, f);
@@ -128,9 +131,16 @@ int state(const char *argv, int pid){
     //fclose(f);
 
     // Get first token
-    token = strtok(str, " ");
+    //token = strtok(f, " ");
     //printf("Token: %s\n", token);
+    char buf[1024];
+    if(fgets(buf, 1024, f) == NULL){
+        printf("Unable to open file2");
+        return 1;
+    }
+    fclose(f);
 
+    token = strtok(buf, " ");
     // Walk through other tokens
     while( token != NULL )
     {
@@ -144,7 +154,7 @@ int state(const char *argv, int pid){
 
         token = strtok(NULL, " ");
     }
-    fclose(f);
+    //fclose(f);
     return 0;
 }
 //-S
@@ -258,3 +268,4 @@ int commandLine(const char *argv){
 
     return 0;
 }
+
