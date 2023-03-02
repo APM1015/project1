@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
          perror("Error: Invalid Number of arguments");
          exit(EXIT_FAILURE);
      }
-/*
+
     for(int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-p") == 0) {
             printf("p = %d    ", pid);
@@ -59,7 +59,8 @@ int main(int argc, char *argv[]) {
     }
     return (0);
 }
-*/
+
+    /*
     int opt = 0;
     int flags;
     while ((opt = getopt(argc, argv, "psUSvc")) != -1) {
@@ -95,7 +96,8 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
-}
+     */
+//}
 
 //pid(argv);
 
@@ -187,12 +189,17 @@ int systemTime(char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
+    char buf[1024];
+    if(fgets(buf, 1024, f) == NULL){
+        printf("Unable to open file2");
+        return 1;
+    }
 
     fclose(f);
 
 
     // Get first token
-    token = strtok(f, " ");
+    token = strtok(buf, " ");
    // printf("Token: %s\n", token);
 
     // Walk through other tokens
@@ -231,11 +238,16 @@ int uTime(char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
+    char buf[1024];
+    if(fgets(buf, 1024, f) == NULL){
+        printf("Unable to open file2");
+        return 1;
+    }
 
     fclose(f);
 
     // Get first token
-    token = strtok(f, " ");
+    token = strtok(buf, " ");
     //printf("Token: %s\n", token);
 
     // Walk through other tokens
@@ -261,7 +273,7 @@ int virtMemory(char *argv, int pid){
     //char procPidStatm[] = "27712 1928 1668 195 0 260  0";
     //char procPidStatm[] = "proc/pid/statm";
     char fileName[100][100];
-    sprintf(fileName, "/proc/%d/stat", pid);
+    sprintf(fileName, "/proc/%d/statm", pid);
 
     //sprintf
     char *token;
@@ -274,11 +286,16 @@ int virtMemory(char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
+    char buf[1024];
+    if(fgets(buf, 1024, f) == NULL){
+        printf("Unable to open file2");
+        return 1;
+    }
 
     fclose(f);
 
     // Get first token
-    token = strtok(f, " ");
+    token = strtok(buf, " ");
     //printf("Token: %s\n", token);
 
     // Walk through other tokens
