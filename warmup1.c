@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
             printf("cache in CPU: %s\n", line + 13);
         }
     }
-    fclose(filePath);
     printf("Total number of processors: %d\n", processor_count);
-
+    fclose(filePath);
 }
