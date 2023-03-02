@@ -19,7 +19,7 @@ int virtMemory(char *argv, int pid);
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
-    printf("pid = %d\n", pid);
+    printf("pid = %d    ", pid);
 
    //pid(*argv);
 
@@ -51,7 +51,10 @@ int main(int argc, char *argv[]) {
         else if(strcmp(argv[i], "-c") == 0){
             commandLine(argv[i], pid);
         }
-        
+        else{
+            perror("?");
+            exit(EXIT_FAILURE);
+        }
 
     }
     return (0);
@@ -67,7 +70,7 @@ int main(int argc, char *argv[]) {
             //   break;
             case 's':    // field separator
                 flags = 1;
-                state(*argv, *pid);
+                state(*argv, pid);
                 break;
             case 'U':    // variable assignment
                 flags = 0;
@@ -300,7 +303,7 @@ int virtMemory(char *argv, int pid){
     {
         //virtual time size in 1st position of statm
         if(i == 0){
-            printf("v = %d\n", token);
+            printf("v = %d    ", token);
         }
         str[i] = token;
         i++;
