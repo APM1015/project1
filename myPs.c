@@ -11,23 +11,22 @@
 
 int pid(const char *string);
 int cpuState();
-int systemTime(const char *string, int pid);
-int state(const char *string, int pid);
-int commandLine(const char *string, int pid);
-int uTime(const char *argv, int pid);
-int virtMemory(const char *argv, int pid);
+int systemTime(char *string, int pid);
+int state(char *string, int pid);
+int commandLine(char *string, int pid);
+int uTime(char *argv, int pid);
+int virtMemory(char *argv, int pid);
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
 
-
    //pid(*argv);
 
-     //if(argc < 2){
-      //   perror("Error: Invalid Number of arguments");
-     //    exit(EXIT_FAILURE);
-    // }
+     if(argc < 2){
+         perror("Error: Invalid Number of arguments");
+         exit(EXIT_FAILURE);
+     }
 
     for(int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-p") == 0) {
@@ -97,7 +96,7 @@ int pid(const char *argv) {
 }
 
 //-s
-int state(const char *argv, int pid){
+int state(char *argv, int pid){
     //int *p = pid;
     //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
    // char proc[] = "proc/";
@@ -151,7 +150,7 @@ int state(const char *argv, int pid){
     return 0;
 }
 //-S
-int systemTime(const char *argv, int pid){
+int systemTime(char *argv, int pid){
 
     // pid_t pid = getpid();
     // printf(pid);
@@ -171,7 +170,7 @@ int systemTime(const char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
- 
+
     fclose(f);
 
 
@@ -196,7 +195,7 @@ int systemTime(const char *argv, int pid){
 
 }
 //-U
-int uTime(const char *argv, int pid){
+int uTime(char *argv, int pid){
     // pid_t pid = getpid();
     // printf(pid);
     //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
@@ -239,7 +238,7 @@ int uTime(const char *argv, int pid){
 }
 
 //-v
-int virtMemory(const char *argv, int pid){
+int virtMemory(char *argv, int pid){
     // pid_t pid = getpid();
     // printf(pid);
     //char procPidStatm[] = "27712 1928 1668 195 0 260  0";
@@ -258,7 +257,7 @@ int virtMemory(const char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
-  
+
     fclose(f);
 
     // Get first token
@@ -283,7 +282,7 @@ int virtMemory(const char *argv, int pid){
 
 
 //-c
-int commandLine(const char *argv, int pid){
+int commandLine(char *argv, int pid){
     char cmndline;
 
     char filename[1024];
@@ -307,4 +306,3 @@ int commandLine(const char *argv, int pid){
 
     return 0;
 }
-
