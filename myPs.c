@@ -18,11 +18,11 @@ int commandLine(char *string, int pid);
 int uTime(char *argv, int pid);
 int virtMemory(char *argv, int pid);
 
-bool s = 0;
-bool c = 1;
-bool v = 0;
-bool U = 1;
-bool S = 1;
+bool s = false;
+bool c = true;
+bool v = false;
+bool U = true;
+bool S = true;
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
@@ -34,37 +34,6 @@ int main(int argc, char *argv[]) {
          perror("Error: Invalid Number of arguments");
          exit(EXIT_FAILURE);
      }
-/*
-    for(int i = 0; i < argc; i++) {
-        if (strcmp(argv[i], "-p") == 0) {
-            printf("p = %d    ", pid);
-            uTime(argv[i], pid);
-            commandLine(argv[i], pid);
-            printf("/n");
-        }
-
-        else if(strcmp(argv[i], "-s") == 0){
-            state(argv[i], pid);
-        }
-        else if(strcmp(argv[i], "-U") == 0){
-            uTime(argv[i], pid);
-        }
-        else if(strcmp(argv[i], "-S") == 0){
-            systemTime(argv[i], pid);
-        }
-        else if(strcmp(argv[i], "-v") == 0){
-            virtMemory(argv[i], pid);
-        }
-        else if(strcmp(argv[i], "-c") == 0){
-            commandLine(argv[i], pid);
-        }
-
-    }
-    printf("\n");
-    return (0);
-}
-*/
-
     int opt = 0;
     //int flags;
     while ((opt = getopt(argc, argv, "psUSvc")) != -1) {
@@ -73,23 +42,28 @@ int main(int argc, char *argv[]) {
             //  pid(argv[i]);
             //   break;
             case 's':    // field separator
-                opt = 1;
+                //opt = 1;
                 //state(*argv, pid);
+                s = !s;
                 break;
             case 'U':    // variable assignment
-                opt = 0;
+                U = !U;
+                //opt = 0;
                 //uTime(argv, pid);
                 break;
             case 'S':    // extension
-                opt = 0;
+                S = !S;
+                //opt = 0;
                 //systemTime(argv, pid);
                 break;
             case 'v':    // extension
-                opt = 1;
+                v = !v;
+                //opt = 1;
                 //virtMemory(*argv, *pid);
                 break;
             case 'c':    // extension
-                opt = 0;
+                c = !c;
+                //opt = 0;
                 //commandLine(argv, *pid);
                 break;
             default:
@@ -101,6 +75,7 @@ int main(int argc, char *argv[]) {
         }
 
     }
+    printf("p = %d   ", pid);
     if(s){
         state(*argv, pid);
     }
@@ -362,3 +337,4 @@ int commandLine(char *argv, int pid){
 
     return 0;
 }
+
