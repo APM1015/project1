@@ -22,9 +22,9 @@ int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
     state(*argv, pid);
-    //uTime(*argv);
-    //systemTime(*argv);
-    //virtMemory(*argv);
+    uTime(*argv);
+    systemTime(*argv);
+    virtMemory(*argv);
     commandLine(*argv, pid);
 
 
@@ -113,7 +113,6 @@ int state(const char *argv, int pid){
     char fileName[100][100];
     //sprintf(fileName, "proc/%d/stat", pid);
     sprintf(fileName, "/proc/%d/stat", pid);
-    printf("%s \n",fileName);
 
     //sprintf
     char *token;
@@ -162,14 +161,26 @@ int systemTime(const char *argv){
 
     // pid_t pid = getpid();
     // printf(pid);
-    char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
+    //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
     //char procPidStat[] = "proc/pid/stat";
+    char fileName[100][100];
+    sprintf(fileName, "/proc/%d/stat", pid);
+
+    //sprintf
     char *token;
-    char *str[30];
+    char *str[400];
     int i = 0;
+    // char buf[1024];
+
+    FILE *f = fopen(fileName,"r");
+    if(f == NULL){
+        printf("Unable to open file\n");
+        return 1;
+    }
+
 
     // Get first token
-    token = strtok(procPidStat, " ");
+    token = strtok(f, " ");
    // printf("Token: %s\n", token);
 
     // Walk through other tokens
@@ -192,14 +203,25 @@ int systemTime(const char *argv){
 int uTime(const char *argv){
     // pid_t pid = getpid();
     // printf(pid);
-    char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
+    //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
     //char procPidStat[] = "proc/pid/stat";
+    char fileName[100][100];
+    sprintf(fileName, "/proc/%d/stat", pid);
+
+    //sprintf
     char *token;
-    char *str[30];
+    char *str[400];
     int i = 0;
+    // char buf[1024];
+
+    FILE *f = fopen(fileName,"r");
+    if(f == NULL){
+        printf("Unable to open file\n");
+        return 1;
+    }
 
     // Get first token
-    token = strtok(procPidStat, " ");
+    token = strtok(f, " ");
     //printf("Token: %s\n", token);
 
     // Walk through other tokens
@@ -222,14 +244,25 @@ int uTime(const char *argv){
 int virtMemory(const char *argv){
     // pid_t pid = getpid();
     // printf(pid);
-    char procPidStatm[] = "27712 1928 1668 195 0 260  0";
+    //char procPidStatm[] = "27712 1928 1668 195 0 260  0";
     //char procPidStatm[] = "proc/pid/statm";
+    char fileName[100][100];
+    sprintf(fileName, "/proc/%d/stat", pid);
+
+    //sprintf
     char *token;
-    char *str[50];
+    char *str[400];
     int i = 0;
+    // char buf[1024];
+
+    FILE *f = fopen(fileName,"r");
+    if(f == NULL){
+        printf("Unable to open file\n");
+        return 1;
+    }
 
     // Get first token
-    token = strtok(procPidStatm, " ");
+    token = strtok(f, " ");
     //printf("Token: %s\n", token);
 
     // Walk through other tokens
@@ -255,7 +288,6 @@ int commandLine(const char *argv, int pid){
 
     char filename[1024];
     snprintf(filename, sizeof(filename), "/proc/%d/cmdline", pid);
-    printf("%s\n", filename);
     FILE *f = fopen(filename, "rb");
 
 
@@ -275,5 +307,4 @@ int commandLine(const char *argv, int pid){
 
     return 0;
 }
-
 
