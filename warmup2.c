@@ -19,15 +19,16 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // Read the contents of the file
+
     char buf[1024];
     int i = 0;
     int count = 0;
+    //read teh file
     while (fgets(buf, 1024, filePath) != NULL) {
-        if(buf[i] == 1){
+        if(buf[i] == 1){ //free mem is 2nd so print the 2nd
             printf("%s\n", buf[i]);
         }
-        count++;
+        count++;//counting the buffers
     }
     printf("number of memory buffers: %d", count);
     // Close file
