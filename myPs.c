@@ -241,23 +241,37 @@ int virtMemory(char *argv, int pid){
 
 //-c
 int commandLine(char *argv, int pid){
-    char cmndline;
+    char cmndline[1024];
+    int l;
 
     char filename[1024];
     sprintf(filename, "/proc/%d/cmdline", pid);
     FILE *f = fopen(filename, "r");
-
-
+    
     if(f == NULL){
         printf("Unable to open file");
         return 1;
     }
-    char cmdline;
-    fscanf(f, "%c", &cmndline);
+    if(f){
+        l = fread(cmndline, 1, 1024 -1, f);
+        if(l > 0){
+            for(int i = 0; i < l; i++){
+                if(cmndline[i] == '\0'){
+                    cmndline[i] = ' ';
+                }
+            }
+            printf("c = %s    ", cmndline);
+        }
+    }
+    //char cmdline;
+    //fscanf(f, "%c", &cmndline);
     //fgets(cmndline, 500, f);
     fclose(f);
 
-    printf("c = %s    \n", cmdline);
+    //printf("c = %s    \n", cmdline);
+    //return 0;
+
+
 
     return 0;
 }
