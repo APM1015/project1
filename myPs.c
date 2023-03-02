@@ -96,26 +96,27 @@ int main(int argc, char *argv[]) {
                 printf("p = %d   ", pid);
                 //uTime(*argv, *pid);
                // commandLine(*argv, *pid);
-                if(s){
-                    state(*argv, pid);
-                }
-                if(U){
-                    uTime(argv, pid);
-                }
-                if(S){
-                    systemTime(argv, pid);
-                }
-                if(v){
-                    virtMemory(argv, pid);
-                }
-                if(c){
-                    commandLine(argv, pid);
-                }
+
                 break;
         }
 
     }
-  
+    if(s){
+        state(*argv, pid);
+    }
+    if(U){
+        uTime(argv, pid);
+    }
+    if(S){
+        systemTime(argv, pid);
+    }
+    if(v){
+        virtMemory(argv, pid);
+    }
+    if(c){
+        commandLine(argv, pid);
+    }
+
     printf("\n");
     return 0;
 }
@@ -361,4 +362,3 @@ int commandLine(char *argv, int pid){
 
     return 0;
 }
-
