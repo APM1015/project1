@@ -26,7 +26,7 @@ bool S = 1;
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
-    printf("pid = %d    ", pid);
+    //printf("pid = %d    ", pid);
 
    //pid(*argv);
 
@@ -93,28 +93,29 @@ int main(int argc, char *argv[]) {
                 //commandLine(argv, *pid);
                 break;
             default:
-                printf("p = %d", pid);
-                uTime(*argv, *pid);
-                commandLine(*argv, *pid);
+                printf("p = %d   ", pid);
+                //uTime(*argv, *pid);
+               // commandLine(*argv, *pid);
+                if(s){
+                    state(*argv, pid);
+                }
+                if(U){
+                    uTime(argv, pid);
+                }
+                if(S){
+                    systemTime(argv, pid);
+                }
+                if(v){
+                    virtMemory(argv, pid);
+                }
+                if(c){
+                    commandLine(argv, pid);
+                }
                 break;
         }
 
     }
-    if(s){
-        state(*argv, pid);
-    }
-    if(U){
-        uTime(argv, pid);
-    }
-    if(S){
-        systemTime(argv, pid);
-    }
-    if(v){
-        virtMemory(argv, pid);
-    }
-    if(c){
-        commandLine(argv, pid);
-    }
+  
     printf("\n");
     return 0;
 }
@@ -360,3 +361,4 @@ int commandLine(char *argv, int pid){
 
     return 0;
 }
+
