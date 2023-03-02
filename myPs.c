@@ -8,6 +8,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 int pid(const char *string);
 int cpuState();
@@ -16,6 +17,12 @@ int state(char *string, int pid);
 int commandLine(char *string, int pid);
 int uTime(char *argv, int pid);
 int virtMemory(char *argv, int pid);
+
+bool s = 0;
+bool c = 1;
+bool v = 0;
+bool U = 1;
+bool S = 1;
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
@@ -67,7 +74,7 @@ int main(int argc, char *argv[]) {
             //   break;
             case 's':    // field separator
                 opt = 1;
-                state(*argv, pid);
+                //state(*argv, pid);
                 break;
             case 'U':    // variable assignment
                 opt = 0;
@@ -79,7 +86,7 @@ int main(int argc, char *argv[]) {
                 break;
             case 'v':    // extension
                 opt = 1;
-                virtMemory(*argv, *pid);
+                //virtMemory(*argv, *pid);
                 break;
             case 'c':    // extension
                 opt = 0;
@@ -91,9 +98,25 @@ int main(int argc, char *argv[]) {
                 commandLine(*argv, *pid);
                 break;
         }
-        return 0;
-    }
 
+    }
+    if(s){
+        state(*argv, pid);
+    }
+    if(U){
+        uTime(argv, pid);
+    }
+    if(S){
+        systemTime(argv, pid);
+    }
+    if(v){
+        virtMemory(argv, pid);
+    }
+    if(c){
+        commandLine(argv, pid);
+    }
+    printf("\n");
+    return 0;
 }
 
 //pid(argv);
