@@ -176,11 +176,7 @@ int systemTime(const char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
-    char buf[1024];
-    if(fgets(buf, 1024, f) == NULL){
-        printf("Unable to open file2");
-        return 1;
-    }
+ 
     fclose(f);
 
 
@@ -224,11 +220,7 @@ int uTime(const char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
-    char buf[1024];
-    if(fgets(buf, 1024, f) == NULL){
-        printf("Unable to open file2");
-        return 1;
-    }
+
     fclose(f);
 
     // Get first token
@@ -271,11 +263,7 @@ int virtMemory(const char *argv, int pid){
         printf("Unable to open file\n");
         return 1;
     }
-    char buf[1024];
-    if(fgets(buf, 1024, f) == NULL){
-        printf("Unable to open file2");
-        return 1;
-    }
+  
     fclose(f);
 
     // Get first token
