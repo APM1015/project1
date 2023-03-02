@@ -21,10 +21,10 @@ int virtMemory(const char *argv);
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
-    state(*argv, pid);
-    uTime(*argv);
-    systemTime(*argv);
-    virtMemory(*argv);
+    //state(*argv, pid);
+    //uTime(*argv);
+    //systemTime(*argv);
+    //virtMemory(*argv);
     commandLine(*argv, pid);
 
 
@@ -253,21 +253,20 @@ int virtMemory(const char *argv){
 int commandLine(const char *argv, int pid){
     char cmndline;
 
-    char filename[1000];
-    char buffer[1024];
+    char filename[1024];
 
-    
-    sprintf(filename, "/proc/%d/cmdline", pid);
-    FILE *f = fopen(filename, "r");
+    snprintf(filename, sizeof(filename), "proc/%d/cmdline", pid);
+    printf("%s\n", filename);
+    FILE *f = fopen(filename, "rb");
 
-    printf("command line = %c\n", cmndline);
+
     if(f == NULL){
         printf("Unable to open file");
         return 1;
     }
-
-    char cmdline[500];
-    fgets(cmndline, 500, f);
+    char cmdline;
+    fscanf(f, "%c", &cmndline);
+    //fgets(cmndline, 500, f);
     fclose(f);
 
     printf("c = %s\n", cmdline);
