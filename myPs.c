@@ -27,59 +27,76 @@ int main(int argc, char *argv[]) {
          perror("Error: Invalid Number of arguments");
          exit(EXIT_FAILURE);
      }
-
+/*
     for(int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-p") == 0) {
-            //pid(argv[i]);
+            printf("p = %d    ", pid);
+            uTime(argv[i], *pid);
+            commandLine(argv[i], *pid);
+            printf("/n");
         }
 
         else if(strcmp(argv[i], "-s") == 0){
-            state(argv[i], pid);
+            state(argv[i], *pid);
         }
         else if(strcmp(argv[i], "-U") == 0){
-            uTime(argv[i], pid);
+            uTime(argv[i], *pid);
         }
         else if(strcmp(argv[i], "-S") == 0){
-            systemTime(argv[i], pid);
+            systemTime(argv[i], *pid);
         }
         else if(strcmp(argv[i], "-v") == 0){
-            virtMemory(argv[i], pid);
+            virtMemory(argv[i], *pid);
         }
         else if(strcmp(argv[i], "-c") == 0){
-            commandLine(argv[i], pid);
+            commandLine(argv[i], *pid);
+        }
+        else{
+            perror("?");
+            exit(EXIT_FAILURE);
         }
 
     }
     return (0);
 }
-/*
-int i = 0;
-while ((argc = getopt(argc, argv, "-p:-s:-U:-S:-v:-c")) != -1) {
-   switch (argc) {
-     //  case '-p':    // file
-         //  pid(argv[i]);
-        //   break;
-       case '-s':    // field separator
-           state(argv[i]);
-           break;
-       case '-U':    // variable assignment
-           uTime(argv[i]);
-           break;
-       case '-S':    // extension
-           systemTime(argv[i]);
-           break;
-       case '-v':    // extension
-           virtMemory(argv[i]);
-           break;
-       case '-c':    // extension
-           commandLine(argv);
-           break;
-       default:
-
-           break;
-   }
-}
 */
+    int opt = 0;
+    int flags;
+    while ((opt = getopt(argc, argv, "psUSvc")) != -1) {
+        switch (opt) {
+            //  case '-p':    // file
+            //  pid(argv[i]);
+            //   break;
+            case 's':    // field separator
+                flags = 1;
+                state(*argv, *pid);
+                break;
+            case 'U':    // variable assignment
+                flags = 0;
+                //uTime(argv, pid);
+                break;
+            case 'S':    // extension
+                flags = 0;
+                //systemTime(argv, pid);
+                break;
+            case 'v':    // extension
+                flags = 1;
+                virtMemory(*argv, *pid);
+                break;
+            case 'c':    // extension
+                flags = 0;
+                //commandLine(argv, *pid);
+                break;
+            default:
+                printf("p = %d", pid);
+                uTime(*argv, *pid);
+                commandLine(*argv, *pid);
+                break;
+        }
+        return 0;
+    }
+}
+
 //pid(argv);
 
 
@@ -138,7 +155,7 @@ int state(char *argv, int pid){
     {
         //status in 3rd position of stat
         if(i == 2){
-            printf("s = %s\n", token);
+            printf("s = %s    ", token);
             break;
         }
         str[i] = token;
@@ -183,7 +200,7 @@ int systemTime(char *argv, int pid){
     {
         //systemTime is 10th position of stat
         if(i == 9){
-            printf("S = %s\n", token);
+            printf("S = %s    ", token);
         }
         str[i] = token;
         i++;
@@ -226,7 +243,7 @@ int uTime(char *argv, int pid){
     {
         //utime in 14th position of stat
         if(i == 13){
-            printf("U = %s\n", token);
+            printf("U = %s    ", token);
         }
         str[i] = token;
         i++;
@@ -299,7 +316,7 @@ int commandLine(char *argv, int pid){
     //fgets(cmndline, 500, f);
     fclose(f);
 
-    printf("c = %s\n", cmdline);
+    printf("c = %s    \n", cmdline);
     //return 0;
 
 
