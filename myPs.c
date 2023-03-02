@@ -21,7 +21,7 @@ int virtMemory(const char *argv);
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
-    //state(*argv, pid);
+    state(*argv, pid);
     //uTime(*argv);
     //systemTime(*argv);
     //virtMemory(*argv);
@@ -112,7 +112,7 @@ int state(const char *argv, int pid){
     //strcat(proc, stat);
     char fileName[100][100];
     //sprintf(fileName, "proc/%d/stat", pid);
-    sprintf(fileName, "proc/%d/stat", pid);
+    sprintf(fileName, "/proc/%d/stat", pid);
     printf("%s \n",fileName);
 
     //sprintf
@@ -254,8 +254,7 @@ int commandLine(const char *argv, int pid){
     char cmndline;
 
     char filename[1024];
-
-    snprintf(filename, sizeof(filename), "proc/%d/cmdline", pid);
+    snprintf(filename, sizeof(filename), "/proc/%d/cmdline", pid);
     printf("%s\n", filename);
     FILE *f = fopen(filename, "rb");
 
@@ -276,4 +275,5 @@ int commandLine(const char *argv, int pid){
 
     return 0;
 }
+
 
