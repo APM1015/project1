@@ -11,20 +11,19 @@
 
 int pid(const char *string);
 int cpuState();
-int systemTime(const char *string);
+int systemTime(const char *string, int pid);
 int state(const char *string, int pid);
 int commandLine(const char *string, int pid);
-int tokenizeStat(const char *argv);
-int uTime(const char *argv);
-int virtMemory(const char *argv);
+int uTime(const char *argv, int pid);
+int virtMemory(const char *argv, int pid);
 
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
     state(*argv, pid);
-    uTime(*argv);
-    systemTime(*argv);
-    virtMemory(*argv);
+    uTime(*argv, pid);
+    systemTime(*argv, pid);
+    virtMemory(*argv, pid);
     commandLine(*argv, pid);
 
 
@@ -44,13 +43,13 @@ int main(int argc, char *argv[]) {
             state(argv[i], pid);
         }
         else if(strcmp(argv[i], "-U") == 0){
-            uTime(argv[i]);
+            uTime(argv[i], pid);
         }
         else if(strcmp(argv[i], "-S") == 0){
-            systemTime(argv[i]);
+            systemTime(argv[i], pid);
         }
         else if(strcmp(argv[i], "-v") == 0){
-            virtMemory(argv[i]);
+            virtMemory(argv[i], pid);
         }
         else if(strcmp(argv[i], "-c") == 0){
             commandLine(argv[i], pid);
@@ -157,7 +156,7 @@ int state(const char *argv, int pid){
     return 0;
 }
 //-S
-int systemTime(const char *argv){
+int systemTime(const char *argv, int pid){
 
     // pid_t pid = getpid();
     // printf(pid);
@@ -206,7 +205,7 @@ int systemTime(const char *argv){
 
 }
 //-U
-int uTime(const char *argv){
+int uTime(const char *argv, int pid){
     // pid_t pid = getpid();
     // printf(pid);
     //char procPidStat[] = "972 (docker-containe) S 901 972 972 0 -1 1077944576 2657 0 2 0 561 205 0 0 20 0 11 0 1820 441688064 2327 18446744073709551615 4194304 11049596 140727040242048 140727040241432 4602915 0 2079995941 0 2143420159 18446744073709551615 0 0 17 1 0 0 0 0 0 13147640 13322176 25554944 140727040249523 140727040249749 140727040249749 140727040249821 0";
@@ -253,7 +252,7 @@ int uTime(const char *argv){
 }
 
 //-v
-int virtMemory(const char *argv){
+int virtMemory(const char *argv, int pid){
     // pid_t pid = getpid();
     // printf(pid);
     //char procPidStatm[] = "27712 1928 1668 195 0 260  0";
