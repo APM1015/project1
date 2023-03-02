@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
          perror("Error: Invalid Number of arguments");
          exit(EXIT_FAILURE);
      }
-
+/*
     for(int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-p") == 0) {
             printf("p = %d    ", pid);
@@ -56,33 +56,33 @@ int main(int argc, char *argv[]) {
     printf("\n");
     return (0);
 }
+*/
 
-    /*
     int opt = 0;
-    int flags;
+    //int flags;
     while ((opt = getopt(argc, argv, "psUSvc")) != -1) {
         switch (opt) {
             //  case '-p':    // file
             //  pid(argv[i]);
             //   break;
             case 's':    // field separator
-                flags = 1;
+                opt = 1;
                 state(*argv, pid);
                 break;
             case 'U':    // variable assignment
-                flags = 0;
+                opt = 0;
                 //uTime(argv, pid);
                 break;
             case 'S':    // extension
-                flags = 0;
+                opt = 0;
                 //systemTime(argv, pid);
                 break;
             case 'v':    // extension
-                flags = 1;
+                opt = 1;
                 virtMemory(*argv, *pid);
                 break;
             case 'c':    // extension
-                flags = 0;
+                opt = 0;
                 //commandLine(argv, *pid);
                 break;
             default:
@@ -93,8 +93,8 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
-     */
-//}
+
+}
 
 //pid(argv);
 
