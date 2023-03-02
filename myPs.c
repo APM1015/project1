@@ -51,12 +51,9 @@ int main(int argc, char *argv[]) {
         else if(strcmp(argv[i], "-c") == 0){
             commandLine(argv[i], pid);
         }
-        else{
-            perror("?");
-            exit(EXIT_FAILURE);
-        }
 
     }
+    printf("\n");
     return (0);
 }
 
