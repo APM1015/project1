@@ -31,25 +31,25 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i < argc; i++) {
         if (strcmp(argv[i], "-p") == 0) {
             printf("p = %d    ", pid);
-            uTime(argv[i], *pid);
-            commandLine(argv[i], *pid);
+            uTime(argv[i], pid);
+            commandLine(argv[i], pid);
             printf("/n");
         }
 
         else if(strcmp(argv[i], "-s") == 0){
-            state(argv[i], *pid);
+            state(argv[i], pid);
         }
         else if(strcmp(argv[i], "-U") == 0){
-            uTime(argv[i], *pid);
+            uTime(argv[i], pid);
         }
         else if(strcmp(argv[i], "-S") == 0){
-            systemTime(argv[i], *pid);
+            systemTime(argv[i], pid);
         }
         else if(strcmp(argv[i], "-v") == 0){
-            virtMemory(argv[i], *pid);
+            virtMemory(argv[i], pid);
         }
         else if(strcmp(argv[i], "-c") == 0){
-            commandLine(argv[i], *pid);
+            commandLine(argv[i], pid);
         }
         
 
