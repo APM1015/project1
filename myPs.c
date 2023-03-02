@@ -317,8 +317,8 @@ int commandLine(char *argv, int pid){
     char cmndline;
 
     char filename[1024];
-    snprintf(filename, sizeof(filename), "/proc/%d/cmdline", pid);
-    FILE *f = fopen(filename, "rb");
+    sprintf(filename, "/proc/%d/cmdline", pid);
+    FILE *f = fopen(filename, "r");
 
 
     if(f == NULL){
