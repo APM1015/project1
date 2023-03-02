@@ -17,6 +17,7 @@ int commandLine(char *string, int pid);
 int uTime(char *argv, int pid);
 int virtMemory(char *argv, int pid);
 
+//created booleans for my different functions as the regular flag from document was not working for my functions
 bool s = false;
 bool c = true;
 bool v = false;
@@ -24,31 +25,33 @@ bool U = true;
 bool S = true;
 
 int main(int argc, char *argv[]) {
+    //retrieving pid
     pid_t *pid = getpid();
-
-     if(argc < 2){
+    
+     if(argc < 2){//error if no argument is presented
          perror("Error: Invalid Number of arguments");
          exit(EXIT_FAILURE);
      }
     int opt = 0;
-    while ((opt = getopt(argc, argv, "psUSvc")) != -1) {
+    while ((opt = getopt(argc, argv, "psUSvc")) != -1) {//using getopt loop from the reading
         switch (opt) {
-            //  case '-p':    // file
+            //  case '-p':    
             //  pid(argv[i]);
             //   break;
-            case 's':    // field separator
+            //each call flips the boolean value for the function call
+            case 's':    
                 s = !s;
                 break;
-            case 'U':    // variable assignment
+            case 'U':    
                 U = !U;
                 break;
-            case 'S':    // extension
+            case 'S':    
                 S = !S;
                 break;
-            case 'v':    // extension
+            case 'v':    
                 v = !v;
                 break;
-            case 'c':    // extension
+            case 'c':    
                 c = !c;
                 break;
             default:
@@ -57,7 +60,8 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    printf("p = %d   ", pid);
+    printf("p = %d   ", pid);//printing pid value
+    //calling function to print if the boolean value is true
     if(s){
         state(*argv, pid);
     }
@@ -87,16 +91,16 @@ int pid(const char *argv) {
     return 0;
 }
 
-//-s
+//-s function
 int state(char *argv, int pid){
     char fileName[100][100];
-    sprintf(fileName, "/proc/%d/stat", pid);
+    sprintf(fileName, "/proc/%d/stat", pid); //put /proc/stat into fileName
 
     char *token;
     char *str[400];
     int i = 0;
 
-    FILE *f = fopen(fileName,"r");
+    FILE *f = fopen(fileName,"r"); //reading fileName
     if(f == NULL){
         printf("Unable to open file\n");
         return 1;
@@ -108,11 +112,12 @@ int state(char *argv, int pid){
     }
     fclose(f);
 
+    //tokenizing the /proc/stat
     token = strtok(buf, " ");
-    // Walk through other tokens
+    // Go through other tokens
     while( token != NULL )
     {
-        //status in 3rd position of stat
+        //status in 3rd position of stat so print value
         if(i == 2){
             printf("s = %s    ", token);
             break;
@@ -123,16 +128,16 @@ int state(char *argv, int pid){
     }
     return 0;
 }
-//-S
-int systemTime(char *argv, int pid){
+//-S function
+int systemTime(char *argv, int pid){ 
     char fileName[100][100];
-    sprintf(fileName, "/proc/%d/stat", pid);
+    sprintf(fileName, "/proc/%d/stat", pid);//Use sprintf to put /proc/stat into fileName
 
     char *token;
     char *str[400];
     int i = 0;
 
-    FILE *f = fopen(fileName,"r");
+    FILE *f = fopen(fileName,"r"); //reading fileName
     if(f == NULL){
         printf("Unable to open file\n");
         return 1;
@@ -144,14 +149,13 @@ int systemTime(char *argv, int pid){
     }
     fclose(f);
 
-    // Get first token
+    // Get token
     token = strtok(buf, " ");
-   // printf("Token: %s\n", token);
 
-    // Walk through other tokens
+    // Go through other tokens
     while( token != NULL )
     {
-        //systemTime is 10th position of stat
+        //systemTime is 10th position of stat so print it out
         if(i == 9){
             printf("S = %s    ", token);
         }
@@ -162,16 +166,16 @@ int systemTime(char *argv, int pid){
     return 0;
 }
 
-//-U
+//-U function
 int uTime(char *argv, int pid){
     char fileName[100][100];
-    sprintf(fileName, "/proc/%d/stat", pid);
+    sprintf(fileName, "/proc/%d/stat", pid); //Use sprintf to put /proc/stat into fileName
 
     char *token;
     char *str[400];
     int i = 0;
 
-    FILE *f = fopen(fileName,"r");
+    FILE *f = fopen(fileName,"r"); //reading fileName
     if(f == NULL){
         printf("Unable to open file\n");
         return 1;
@@ -183,14 +187,13 @@ int uTime(char *argv, int pid){
     }
     fclose(f);
 
-    // Get first token
+    // Get token and tokenize /proc/stat
     token = strtok(buf, " ");
-    //printf("Token: %s\n", token);
 
-    // Walk through other tokens
+    // Go through other tokens
     while( token != NULL )
     {
-        //utime in 14th position of stat
+        //utime in 14th position of stat so print it out
         if(i == 13){
             printf("U = %s    ", token);
         }
@@ -201,16 +204,16 @@ int uTime(char *argv, int pid){
     return 0;
 }
 
-//-v
+//-v function
 int virtMemory(char *argv, int pid){
     char fileName[100][100];
-    sprintf(fileName, "/proc/%d/statm", pid);
+    sprintf(fileName, "/proc/%d/statm", pid); //Use sprintf to put /proc/statm into fileName
 
     char *token;
     char *str[400];
     int i = 0;
 
-    FILE *f = fopen(fileName,"r");
+    FILE *f = fopen(fileName,"r"); //reading fileName into *f
     if(f == NULL){
         printf("Unable to open file\n");
         return 1;
@@ -222,13 +225,13 @@ int virtMemory(char *argv, int pid){
     }
     fclose(f);
 
-    // Get first token
+    // Get first token and tokenise /proc/statm
     token = strtok(buf, " ");
 
-    // Walk through other tokens
+    // Go through other tokens
     while( token != NULL )
     {
-        //virtual time size in 1st position of statm
+        //virtual time size in 1st position of statm so print it out
         if(i == 0){
             printf("v = %d    ", token);
         }
@@ -243,19 +246,20 @@ int virtMemory(char *argv, int pid){
 int commandLine(char *argv, int pid){
     char cmndline[1024];
     int l;
-
     char filename[1024];
+
     sprintf(filename, "/proc/%d/cmdline", pid);
     FILE *f = fopen(filename, "r");
-    
-    if(f == NULL){
+
+    if(f == NULL){//error if file is NULL or error occurs
         printf("Unable to open file");
         return 1;
     }
-    if(f){
+    if(f){//if file is readible get length to go into for loop and print out cmndline
         l = fread(cmndline, 1, 1024 -1, f);
         if(l > 0){
             for(int i = 0; i < l; i++){
+                //eliminate null space
                 if(cmndline[i] == '\0'){
                     cmndline[i] = ' ';
                 }
@@ -263,15 +267,9 @@ int commandLine(char *argv, int pid){
             printf("c = %s    ", cmndline);
         }
     }
-    //char cmdline;
-    //fscanf(f, "%c", &cmndline);
-    //fgets(cmndline, 500, f);
+    //close file
     fclose(f);
-
-    //printf("c = %s    \n", cmdline);
-    //return 0;
-
-
 
     return 0;
 }
+
