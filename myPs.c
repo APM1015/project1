@@ -20,11 +20,6 @@ int virtMemory(const char *argv, int pid);
 int main(int argc, char *argv[]) {
     pid_t *pid = getpid();
     printf("pid = %d\n", pid);
-    state(*argv, pid);
-    uTime(*argv, pid);
-    systemTime(*argv, pid);
-    virtMemory(*argv, pid);
-    commandLine(*argv, pid);
 
 
    //pid(*argv);
