@@ -275,7 +275,7 @@ int virtMemory(const char *argv, int pid){
     {
         //virtual time size in 1st position of statm
         if(i == 0){
-            printf("v = %s\n", token);
+            printf("v = %d\n", token);
         }
         str[i] = token;
         i++;
