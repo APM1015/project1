@@ -21,9 +21,15 @@ int main(int argc, char *argv[]) {
 
     // Read the contents of the file
     char buf[1024];
+    int i = 0;
+    int count = 0;
     while (fgets(buf, 1024, filePath) != NULL) {
-         printf("%s", buf);
+        if(buf[i] == 1){
+            printf("%s\n", buf[i]);
+        }
+        count++;
     }
+    printf("number of memory buffers: %d", count);
     // Close file
     fclose(filePath);
 }
