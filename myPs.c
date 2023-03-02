@@ -13,7 +13,7 @@ int pid(const char *string);
 int cpuState();
 int systemTime(const char *string);
 int state(const char *string, int pid);
-int commandLine(const char *string);
+int commandLine(const char *string, int pid);
 int tokenizeStat(const char *argv);
 int uTime(const char *argv);
 int virtMemory(const char *argv);
@@ -25,39 +25,40 @@ int main(int argc, char *argv[]) {
     uTime(*argv);
     systemTime(*argv);
     virtMemory(*argv);
+    commandLine(*argv, pid);
 
-   return (0);
-}
+
    //pid(*argv);
 
      //if(argc < 2){
       //   perror("Error: Invalid Number of arguments");
      //    exit(EXIT_FAILURE);
     // }
-/*
-for(int i = 0; i < argc; i++) {
-    if (strcmp(argv[i], "-p") == 0) {
-        pid(argv[i]);
-    }
 
-    else if(strcmp(argv[i], "-s") == 0){
-        state(argv[i]);
-    }
-    else if(strcmp(argv[i], "-U") == 0){
-        uTime(argv[i]);
-    }
-    else if(strcmp(argv[i], "-S") == 0){
-        systemTime(argv[i]);
-    }
-    else if(strcmp(argv[i], "-v") == 0){
-        virtMemory(argv[i]);
-    }
-    else if(strcmp(argv[i], "-c") == 0){
-        commandLine(argv[i]);
-    }
+    for(int i = 0; i < argc; i++) {
+        if (strcmp(argv[i], "-p") == 0) {
+            //pid(argv[i]);
+        }
 
+        else if(strcmp(argv[i], "-s") == 0){
+            state(argv[i], pid);
+        }
+        else if(strcmp(argv[i], "-U") == 0){
+            uTime(argv[i]);
+        }
+        else if(strcmp(argv[i], "-S") == 0){
+            systemTime(argv[i]);
+        }
+        else if(strcmp(argv[i], "-v") == 0){
+            virtMemory(argv[i]);
+        }
+        else if(strcmp(argv[i], "-c") == 0){
+            commandLine(argv[i], pid);
+        }
+
+    }
+    return (0);
 }
- */
 /*
 int i = 0;
 while ((argc = getopt(argc, argv, "-p:-s:-U:-S:-v:-c")) != -1) {
@@ -109,17 +110,16 @@ int state(const char *argv, int pid){
     //char stat[] = "/stat";
     //strcat(proc, pid);
     //strcat(proc, stat);
-    char fileName[1024];
+    char fileName[100][100];
     //sprintf(fileName, "proc/%d/stat", pid);
     sprintf(fileName, "proc/%d/stat", pid);
-    printf("%s ",fileName);
+    printf("%s \n",fileName);
 
     //sprintf
     char *token;
     char *str[400];
     int i = 0;
    // char buf[1024];
-
 
     FILE *f = fopen(fileName,"r");
     if(f == NULL){
@@ -250,18 +250,27 @@ int virtMemory(const char *argv){
 
 
 //-c
-int commandLine(const char *argv){
+int commandLine(const char *argv, int pid){
     char cmndline;
 
     char filename[1000];
     char buffer[1024];
 
-    printf(filename, "/proc/%d/cmdline", pid);
+    
+    sprintf(filename, "/proc/%d/cmdline", pid);
     FILE *f = fopen(filename, "r");
 
     printf("command line = %c\n", cmndline);
+    if(f == NULL){
+        printf("Unable to open file");
+        return 1;
+    }
 
+    char cmdline[500];
+    fgets(cmndline, 500, f);
     fclose(f);
+
+    printf("c = %s\n", cmdline);
     //return 0;
 
 
